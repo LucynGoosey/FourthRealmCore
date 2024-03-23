@@ -22,6 +22,9 @@ public final class FourthRealmCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        PlayerDataHandler playerDataHandler = new PlayerDataHandler(this);
+        playerDataHandler.saveAllPlayerData();
+
         // Plugin shutdown logic
     }
 }

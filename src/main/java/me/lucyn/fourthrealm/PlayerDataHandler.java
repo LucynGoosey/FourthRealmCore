@@ -28,6 +28,7 @@ public class PlayerDataHandler implements Listener {
         playerData.set("PlayerName", player.getName());
         playerData.set("CurrentLivingWorld", realmPlayer.currentLivingWorld.getName());
         playerData.set("BlessingID", realmPlayer.blessingID);
+        playerData.set("beds", realmPlayer.beds);
         // Add more data as needed
 
         try {
@@ -68,6 +69,12 @@ public class PlayerDataHandler implements Listener {
     public void onPlayerQuit(org.bukkit.event.player.PlayerQuitEvent event) {
         savePlayerData(FourthRealmCore.playerData.get(event.getPlayer()));
         FourthRealmCore.playerData.remove(event.getPlayer());
+    }
+
+    public void saveAllPlayerData() {
+        for(Player player : FourthRealmCore.playerData.keySet()) {
+            savePlayerData(FourthRealmCore.playerData.get(player));
+        }
     }
 
 }

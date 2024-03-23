@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>me.lucyn</groupId>
-  <artifactId>FourthRealm</artifactId>
+  <artifactId>FourthRealmCore</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
 
