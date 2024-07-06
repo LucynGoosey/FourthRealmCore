@@ -1,4 +1,5 @@
 package me.lucyn.fourthrealm;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,6 +9,8 @@ import org.bukkit.event.Listener;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -49,11 +52,13 @@ public class PlayerDataHandler implements Listener {
 
             realmPlayer.currentLivingWorld = plugin.getServer().getWorld(Objects.requireNonNull(playerData.getString("CurrentLivingWorld")));
             realmPlayer.blessingID = playerData.getInt("BlessingID");
+            realmPlayer.beds = (Map<World, Location>) playerData.get("beds");
 
         }
         else {
             realmPlayer.currentLivingWorld = player.getWorld();
             realmPlayer.blessingID = -1;
+            realmPlayer.beds = new HashMap<World, Location>();
 
         }
         FourthRealmCore.playerData.put(player, realmPlayer);
