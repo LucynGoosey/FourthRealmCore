@@ -1,4 +1,5 @@
 package me.lucyn.fourthrealm;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -46,7 +47,7 @@ public class PlayerDataHandler implements Listener {
             FileConfiguration playerData = YamlConfiguration.loadConfiguration(playerDataFile);
 
 
-            realmPlayer.currentLivingWorld = player.getWorld();
+            realmPlayer.currentLivingWorld = (World) playerData.get("CurrentLivingWorld");
             realmPlayer.blessingID = playerData.getInt("BlessingID");
 
             if(!Objects.equals(playerData.getString("CurrentLivingWorld"), player.getWorld().getName())) {
