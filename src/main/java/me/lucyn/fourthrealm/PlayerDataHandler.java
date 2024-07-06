@@ -55,6 +55,7 @@ public class PlayerDataHandler implements Listener {
         }
         else {
             realmPlayer.currentLivingWorld = player.getWorld();
+            realmPlayer.blessingID = -1;
 
         }
         FourthRealmCore.playerData.put(player, realmPlayer);
