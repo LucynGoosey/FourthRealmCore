@@ -10,11 +10,15 @@ public final class FourthRealmCore extends JavaPlugin {
 
     public static Map<Player, RealmPlayer> playerData;
 
+    private PlayerDataHandler playerDataHandler;
+
     @Override
     public void onEnable() {
         playerData = new HashMap<>();
 
-        getServer().getPluginManager().registerEvents(new PlayerDataHandler(this), this);
+        this.playerDataHandler = new PlayerDataHandler(this);
+
+        getServer().getPluginManager().registerEvents(playerDataHandler, this);
 
         // Plugin startup logic
 
@@ -22,9 +26,17 @@ public final class FourthRealmCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        PlayerDataHandler playerDataHandler = new PlayerDataHandler(this);
         playerDataHandler.saveAllPlayerData();
 
         // Plugin shutdown logic
+    }
+
+    public RealmPlayer getPlayerData(Player player) {
+        return playerData.get(player);
+    }
+
+    public void setPlayerData(RealmPlayer player) {
+        playerData.put(player.getPlayer(), player);
+
     }
 }
