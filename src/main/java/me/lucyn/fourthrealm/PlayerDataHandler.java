@@ -47,12 +47,9 @@ public class PlayerDataHandler implements Listener {
             FileConfiguration playerData = YamlConfiguration.loadConfiguration(playerDataFile);
 
 
-            realmPlayer.currentLivingWorld = (World) playerData.get("CurrentLivingWorld");
+            realmPlayer.currentLivingWorld = plugin.getServer().getWorld(Objects.requireNonNull(playerData.getString("CurrentLivingWorld")));
             realmPlayer.blessingID = playerData.getInt("BlessingID");
 
-            if(!Objects.equals(playerData.getString("CurrentLivingWorld"), player.getWorld().getName())) {
-                plugin.getLogger().info("Player's current world does not match data file");
-            }
         }
         else {
             realmPlayer.currentLivingWorld = player.getWorld();
