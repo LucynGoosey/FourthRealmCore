@@ -1,5 +1,4 @@
 package me.lucyn.fourthrealm;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -9,8 +8,9 @@ import org.bukkit.event.Listener;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -32,7 +32,12 @@ public class PlayerDataHandler implements Listener {
         playerData.set("PlayerName", player.getName());
         playerData.set("CurrentLivingWorld", realmPlayer.currentLivingWorld.getName());
         playerData.set("BlessingID", realmPlayer.blessingID);
-        playerData.set("beds", realmPlayer.beds);
+
+
+
+        for(World world : realmPlayer.beds.keySet()) {
+            playerData.set(world.getName(), realmPlayer.beds.get(world));
+        }
         // Add more data as needed
 
         try {
@@ -46,19 +51,39 @@ public class PlayerDataHandler implements Listener {
         File playerDataFile = new File(plugin.getDataFolder(), player.getUniqueId() + ".yml");
         RealmPlayer realmPlayer = new RealmPlayer(player);
 
+
+
         if(playerDataFile.exists()) {
             FileConfiguration playerData = YamlConfiguration.loadConfiguration(playerDataFile);
 
 
             realmPlayer.currentLivingWorld = plugin.getServer().getWorld(Objects.requireNonNull(playerData.getString("CurrentLivingWorld")));
             realmPlayer.blessingID = playerData.getInt("BlessingID");
-            realmPlayer.beds = (Map<World, Location>) playerData.get("beds");
+            realmPlayer.beds = new HashMap<>();
+
+            List<World> worlds = new ArrayList<>();
+
+            List<World> allWorlds = plugin.getServer().getWorlds();
+
+
+            for(World world : allWorlds) {
+                if(world.getEnvironment().equals(World.Environment.NORMAL)) {
+                    worlds.add(world);
+                }
+            }
+
+            for(World world : worlds) {
+
+                if(playerData.contains(world.getName())) {
+                    realmPlayer.beds.put(world, playerData.getLocation(world.getName()));
+                }
+            }
 
         }
         else {
             realmPlayer.currentLivingWorld = player.getWorld();
             realmPlayer.blessingID = -1;
-            realmPlayer.beds = new HashMap<World, Location>();
+            realmPlayer.beds = new HashMap<>();
 
         }
         FourthRealmCore.playerData.put(player, realmPlayer);

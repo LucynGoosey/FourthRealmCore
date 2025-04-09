@@ -22,6 +22,13 @@ public final class FourthRealmCore extends JavaPlugin {
 
         // Plugin startup logic
 
+        if(!getServer().getOnlinePlayers().isEmpty()) { // load player data of all online players in event of plugin reload
+            for(Player player : getServer().getOnlinePlayers()) {
+                playerDataHandler.loadPlayerData(player);
+            }
+        }
+
+
     }
 
     @Override
@@ -29,6 +36,8 @@ public final class FourthRealmCore extends JavaPlugin {
         playerDataHandler.saveAllPlayerData();
 
         // Plugin shutdown logic
+
+
     }
 
     public RealmPlayer getPlayerData(Player player) {
