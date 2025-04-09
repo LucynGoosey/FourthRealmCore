@@ -48,4 +48,7 @@ public final class FourthRealmCore extends JavaPlugin {
         playerData.put(player.getPlayer(), player);
 
     }
+    public PlayerDataHandler getPlayerDataHandler() {
+        return playerDataHandler;
+    }
 }

@@ -32,6 +32,8 @@ public class PlayerDataHandler implements Listener {
         playerData.set("PlayerName", player.getName());
         playerData.set("CurrentLivingWorld", realmPlayer.currentLivingWorld.getName());
         playerData.set("BlessingID", realmPlayer.blessingID);
+        playerData.set("PurgatoryRespawn", realmPlayer.purgatoryRespawn);
+
 
 
 
@@ -60,6 +62,7 @@ public class PlayerDataHandler implements Listener {
             realmPlayer.currentLivingWorld = plugin.getServer().getWorld(Objects.requireNonNull(playerData.getString("CurrentLivingWorld")));
             realmPlayer.blessingID = playerData.getInt("BlessingID");
             realmPlayer.beds = new HashMap<>();
+            realmPlayer.purgatoryRespawn = playerData.getBoolean("PurgatoryRespawn");
 
             List<World> worlds = new ArrayList<>();
 
@@ -89,7 +92,7 @@ public class PlayerDataHandler implements Listener {
         FourthRealmCore.playerData.put(player, realmPlayer);
     }
 
-    @EventHandler
+    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
     public void onPlayerJoin(org.bukkit.event.player.PlayerJoinEvent event) {
         loadPlayerData(event.getPlayer());
     }

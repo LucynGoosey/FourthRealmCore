@@ -11,6 +11,7 @@ public class RealmPlayer {
     private final Player player;
     public World currentLivingWorld;
     public int blessingID;
+    public boolean purgatoryRespawn;
 
     public Map<World, Location> beds;
 
@@ -24,6 +25,9 @@ public class RealmPlayer {
         return player;
     }
 
-
+    public RealmPlayer setPurgatoryRespawn(boolean purgatoryRespawn) {
+        this.purgatoryRespawn = purgatoryRespawn;
+        return this;
+    }
 
 }
