@@ -33,9 +33,8 @@ public class PlayerDataHandler implements Listener {
         playerData.set("CurrentLivingWorld", realmPlayer.currentLivingWorld.getName());
         playerData.set("BlessingID", realmPlayer.blessingID);
         playerData.set("PurgatoryRespawn", realmPlayer.purgatoryRespawn);
-
-
-
+        playerData.set("XP", realmPlayer.XP);
+        playerData.set("Level", realmPlayer.level);
 
         for(World world : realmPlayer.beds.keySet()) {
             playerData.set(world.getName(), realmPlayer.beds.get(world));
@@ -63,6 +62,8 @@ public class PlayerDataHandler implements Listener {
             realmPlayer.blessingID = playerData.getInt("BlessingID");
             realmPlayer.beds = new HashMap<>();
             realmPlayer.purgatoryRespawn = playerData.getBoolean("PurgatoryRespawn");
+            realmPlayer.XP = playerData.getLong("XP");
+            realmPlayer.level = playerData.getInt("Level");
 
             List<World> worlds = new ArrayList<>();
 

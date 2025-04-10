@@ -11,7 +11,9 @@ public class RealmPlayer {
     private final Player player;
     public World currentLivingWorld;
     public int blessingID;
-    public boolean purgatoryRespawn;
+    public boolean purgatoryRespawn; // used for persisting respawns on disconnect
+    public long XP;
+    public int level;
 
     public Map<World, Location> beds;
 
