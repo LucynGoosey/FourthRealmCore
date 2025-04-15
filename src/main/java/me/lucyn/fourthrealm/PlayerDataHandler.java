@@ -8,10 +8,7 @@ import org.bukkit.event.Listener;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 
 public class PlayerDataHandler implements Listener {
@@ -30,11 +27,17 @@ public class PlayerDataHandler implements Listener {
         FileConfiguration playerData = YamlConfiguration.loadConfiguration(playerDataFile);
 
         playerData.set("PlayerName", player.getName());
+
         playerData.set("CurrentLivingWorld", realmPlayer.currentLivingWorld.getName());
-        playerData.set("BlessingID", realmPlayer.blessingID);
         playerData.set("PurgatoryRespawn", realmPlayer.purgatoryRespawn);
+
         playerData.set("XP", realmPlayer.XP);
         playerData.set("Level", realmPlayer.level);
+
+        playerData.set("EquippedAbilities", realmPlayer.equippedAbilities);
+
+        playerData.set("UnlockedAbilities", realmPlayer.unlockedAbilities.toArray(new String[0]));
+
 
         for(World world : realmPlayer.beds.keySet()) {
             playerData.set(world.getName(), realmPlayer.beds.get(world));
@@ -59,11 +62,22 @@ public class PlayerDataHandler implements Listener {
 
 
             realmPlayer.currentLivingWorld = plugin.getServer().getWorld(Objects.requireNonNull(playerData.getString("CurrentLivingWorld")));
-            realmPlayer.blessingID = playerData.getInt("BlessingID");
             realmPlayer.beds = new HashMap<>();
             realmPlayer.purgatoryRespawn = playerData.getBoolean("PurgatoryRespawn");
+
             realmPlayer.XP = playerData.getLong("XP");
             realmPlayer.level = playerData.getInt("Level");
+
+            realmPlayer.equippedAbilities = (String[]) playerData.get("EquippedAbilities");
+
+            realmPlayer.unlockedAbilities = new HashSet<>();
+            String[] unlockedAbilities = (String[]) playerData.get("UnlockedAbilities");
+            assert unlockedAbilities != null : "UnlockedAbilities is null";
+            realmPlayer.unlockedAbilities.addAll(Arrays.asList(unlockedAbilities));
+
+
+
+
 
             List<World> worlds = new ArrayList<>();
 
@@ -86,7 +100,6 @@ public class PlayerDataHandler implements Listener {
         }
         else {
             realmPlayer.currentLivingWorld = player.getWorld();
-            realmPlayer.blessingID = -1;
             realmPlayer.beds = new HashMap<>();
 
         }
