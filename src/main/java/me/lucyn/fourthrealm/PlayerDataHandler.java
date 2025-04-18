@@ -34,9 +34,11 @@ public class PlayerDataHandler implements Listener {
         playerData.set("XP", realmPlayer.XP);
         playerData.set("Level", realmPlayer.level);
 
-        playerData.set("EquippedAbilities", realmPlayer.equippedAbilities);
+        playerData.set("EquippedAbilities.0", realmPlayer.equippedAbilities[0]);
+        playerData.set("EquippedAbilities.1", realmPlayer.equippedAbilities[1]);
+        playerData.set("EquippedAbilities.2", realmPlayer.equippedAbilities[2]);
 
-        playerData.set("UnlockedAbilities", realmPlayer.unlockedAbilities.toArray(new String[0]));
+        playerData.set("UnlockedAbilities", realmPlayer.unlockedAbilities);
 
 
         for(World world : realmPlayer.beds.keySet()) {
@@ -68,12 +70,13 @@ public class PlayerDataHandler implements Listener {
             realmPlayer.XP = playerData.getLong("XP");
             realmPlayer.level = playerData.getInt("Level");
 
-            realmPlayer.equippedAbilities = (String[]) playerData.get("EquippedAbilities");
+            realmPlayer.equippedAbilities[0] = playerData.getString("EquippedAbilities.0");
+            realmPlayer.equippedAbilities[1] = playerData.getString("EquippedAbilities.1");
+            realmPlayer.equippedAbilities[2] = playerData.getString("EquippedAbilities.2");
 
             realmPlayer.unlockedAbilities = new HashSet<>();
-            String[] unlockedAbilities = (String[]) playerData.get("UnlockedAbilities");
-            assert unlockedAbilities != null : "UnlockedAbilities is null";
-            realmPlayer.unlockedAbilities.addAll(Arrays.asList(unlockedAbilities));
+            List<String> unlockedAbilities = playerData.getStringList("UnlockedAbilities");
+            realmPlayer.unlockedAbilities.addAll(unlockedAbilities);
 
 
 
